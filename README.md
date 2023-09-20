@@ -1,4 +1,4 @@
-# test-automation-for-42-shell-projects
+# Test Automation Suite for 42 School Shell Projects
 
 🚧 In progress 🚧
 
