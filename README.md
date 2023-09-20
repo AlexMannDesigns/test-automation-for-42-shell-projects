@@ -22,11 +22,15 @@ $ source venv/bin/activate
 ```
 3. Install the Robot Framework (make sure your venv is DEFINITELY active, see the hint above):
 ```
-(venv) $ python -m pip install <package-name>
+(venv) $ python -m pip install robotframework
 ```
 That's it! When you're done working on this project, deactivate the venv by using... deactivate:
 ```
 (venv) $ deactivate
+```
+Check it installed properly by running the following command with your venv active and inactive. This command should not work when your venv is not active if you followed the above steps correctly:
+```
+(venv) $ robot --version
 ```
 ## Want to contribute to this project?
 
