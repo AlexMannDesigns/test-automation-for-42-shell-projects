@@ -28,3 +28,6 @@ That's it! When you're done working on this project, deactivate the venv by usin
 ```
 (venv) $ deactivate
 ```
+## Want to contribute to this project?
+
+That's great! See the TODO list under tests.robot to check out what needs doing - or if you have another suggestion to improve the project, just let me know! (email: alex.mann.designs@gmail.com)
