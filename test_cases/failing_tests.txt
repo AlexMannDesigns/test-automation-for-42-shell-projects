@@ -1,0 +1,33 @@
+# backslash inside double quotes is not being handled properly
+echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
+
+export A-
+export HELLO="123 A-"
+export HELLO-=123
+export =
+export 123
+cd 123123
+exit 123
+exit 298
+exit +100
+exit "+100"
+exit +"100"
+exit -100
+exit "-100"
+exit -"100"
+exit hello
+exit 42 world
+
+Not failing just not implemented yet:
+export hello
+export HELLO=123
+export HELLO=123 A
+export hello world
+unset
+unset HELLO
+unset HELLO1 HELLO2
+unset HOME
+unset PATH
+unset SHELL
+cd $PWD
+cd $PWD hi
