@@ -18,14 +18,26 @@ ${TEMP_DIR}          temp
 ${echo_file_path}    test_cases/echo_test_cases.txt
 
 # TODO
-# Add more test case files and implement with new test cases
-# A different testing process will be required to check redirections are working properly
+# Good beginner tasks
+# (let Alex know if you want to work on something and he'll allocate it to you.
+# Or if you want to help out with a task that's already been taken, you can just
+# reach out to that student directly):
+
+# Add more test case files and implement with new test cases - Linh
+
 # skip cases if the line begins with a # symbol
+
 # errors will need to be handled differently due to differences in text of err message
 #  - Using python to chop out the relevant part of the message text might be the best way forward
+
 # Find a minishell implementation that works with existing bash script to test this on
-# add a bit of visual pizazz to the console logs, now are a bit stale and hard to read
+
 # add some basic tests for norminette and Makefile/compiling without errors
+
+# More advanced stuff, or stuff that is either lower priority or bottle-necked:
+# Come up with a better process for task allocation
+# add a bit of visual pizazz to the console logs, now are a bit stale and hard to read
+# A different testing process will be required to check redirections are working properly - Alex
 # Move keywords to a separate resources file
 # To look into:
 # how to run specific test cases in rfw
@@ -35,6 +47,7 @@ Test Builtin Echo
     [Documentation]    Testing for the builtin function 'echo'
     @{ECHO}=           Get test cases    ${echo_file_path}
     Simple command test loop             @{ECHO}
+
 
 *** Keywords ***
 Simple command test loop
