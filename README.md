@@ -12,7 +12,7 @@ For a nice overview of python virtual environments, I recommend you read [this a
 
 The tldr version of the command line you need (for mac and linux):
 
-1. Set up your virtual environment (I suggest doing this in the root dir of your shell project):
+1. Set up your virtual environment (I suggest doing this in the root dir of the project):
 ```
 $ python3 -m venv venv 
 ```
