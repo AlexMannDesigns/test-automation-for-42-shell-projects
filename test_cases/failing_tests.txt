@@ -1,5 +1,7 @@
 # backslash inside double quotes is not being handled properly
 echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
+# PWD is bad variable to test the expansion of because of how bash handles it
+
 
 export A-
 export HELLO="123 A-"
@@ -7,6 +9,8 @@ export HELLO-=123
 export =
 export 123
 cd 123123
+
+# exit tests will need to be handled differently (remove printing of 'exit')
 exit 123
 exit 298
 exit +100

@@ -11,7 +11,7 @@ Library          OperatingSystem
 # bash can be changed to the name of another reference shell
 ${shell_name}        42sh
 ${shell}             .././${shell_name}
-${bash}              bash
+${bash}              /bin/bash
 ${diff_OK}           ${0}
 
 ${TEMP_DIR}          temp
@@ -34,10 +34,13 @@ ${echo_file_path}    test_cases/echo_test_cases.txt
 
 # add some basic tests for norminette and Makefile/compiling without errors
 
+# exit tests will need to be handled slightly differently because of how bash prints 'exit'
+
 # More advanced stuff, or stuff that is either lower priority or bottle-necked:
 # Come up with a better process for task allocation
 # add a bit of visual pizazz to the console logs, now are a bit stale and hard to read
 # A different testing process will be required to check redirections are working properly - Alex
+# env argument of run() can be used to test environment and variable things
 # Move keywords to a separate resources file
 # To look into:
 # how to run specific test cases in rfw
