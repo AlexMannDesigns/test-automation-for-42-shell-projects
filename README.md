@@ -12,7 +12,7 @@ For a nice overview of python virtual environments, I recommend you read [this a
 
 The tldr version of the command line you need (for mac and linux):
 
-1. Set up your virtual environment (I suggest doing this in the root dir of your shell project):
+1. Set up your virtual environment (I suggest doing this in the root dir of the project):
 ```
 $ python3 -m venv venv 
 ```
@@ -35,3 +35,5 @@ Check it installed properly by running the following command with your venv acti
 ## Want to contribute to this project?
 
 That's great! See the TODO list under tests.robot to check out what needs doing - or if you have another suggestion to improve the project, just let me know! (email: alex.mann.designs@gmail.com)
+
+TODO: create a better system for managing contributions 😏
