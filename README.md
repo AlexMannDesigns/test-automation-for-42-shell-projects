@@ -35,3 +35,4 @@ Check it installed properly by running the following command with your venv acti
 ## Want to contribute to this project?
 
 That's great! See the TODO list under tests.robot to check out what needs doing - or if you have another suggestion to improve the project, just let me know! (email: alex.mann.designs@gmail.com)
+TODO: create a better system for managing contributions 😏
