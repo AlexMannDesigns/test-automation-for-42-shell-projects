@@ -87,6 +87,7 @@ Simple command
 Command
     [Documentation]    Takes a command line string and runs it in the specified shell
     ...                Returns a dictionary containing any outputs and the return value.
+    # rename arg_string to command_line for clarity
     [Arguments]        ${arg_string}      ${target_shell}
     ${result}          run command        ${arg_string}      ${target_shell}
     RETURN             ${result}

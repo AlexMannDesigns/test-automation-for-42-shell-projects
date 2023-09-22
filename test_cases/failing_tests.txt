@@ -1,7 +1,4 @@
-# backslash inside double quotes is not being handled properly
-echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
 # PWD is bad variable to test the expansion of because of how bash handles it
-
 
 export A-
 export HELLO="123 A-"
