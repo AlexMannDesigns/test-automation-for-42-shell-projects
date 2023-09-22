@@ -36,6 +36,10 @@ ${echo_file_path}    test_cases/echo_test_cases.txt
 
 # exit tests will need to be handled slightly differently because of how bash prints 'exit'
 
+# the hard-coded path to the bash binary in the ${bash} variable may not work on some
+# systems. There should be a function to locate the ref shell when assigning that
+# variable
+
 # More advanced stuff, or stuff that is either lower priority or bottle-necked:
 # Come up with a better process for task allocation
 # add a bit of visual pizazz to the console logs, now are a bit stale and hard to read
