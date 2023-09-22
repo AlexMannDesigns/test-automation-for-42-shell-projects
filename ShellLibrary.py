@@ -3,10 +3,11 @@ from subprocess import run, PIPE, Popen, TimeoutExpired
 
 # timeout in seconds for tests
 TIMEOUT = 5
+# echo command being used to write command-line to pipe
 ECHO = "echo"
 
 def result_dict_constructor(case: str = None, output: str = None,
-                            err_output: str = None, return_value: str = None) -> dict:
+                            err_output: str = None, return_value: int = None) -> dict:
     """
         Standardising the returned object from test cases.
         Implementing it this way allows for use of default values.
@@ -18,7 +19,6 @@ def result_dict_constructor(case: str = None, output: str = None,
         return_value=return_value
     )
 
-# arg string should be renamed "command_line"
 def run_command(command_line: str, shell_path: str) -> dict:
     """
         Runs the given "command_line" in the shell identified by "shell_path"
