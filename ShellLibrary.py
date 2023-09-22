@@ -7,7 +7,7 @@ TIMEOUT = 5
 ECHO = "echo"
 
 def result_dict_constructor(case: str = None, output: str = None,
-                            err_output: str = None, return_value: int = None) -> dict:
+                            error_output: str = None, return_value: int = None) -> dict:
     """
         Standardising the returned object from test cases.
         Implementing it this way allows for use of default values.
@@ -15,7 +15,7 @@ def result_dict_constructor(case: str = None, output: str = None,
     return dict(
         case=case,
         output=output,
-        err_output=err_output,
+        error_output=error_output,
         return_value=return_value
     )
 
@@ -60,6 +60,6 @@ def run_command(command_line: str, shell_path: str) -> dict:
     return result_dict_constructor(
         case=command_line,
         output=result.stdout,
-        err_output=result.stderr,
+        error_output=result.stderr,
         return_value=result.returncode
         )
