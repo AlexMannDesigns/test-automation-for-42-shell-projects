@@ -55,8 +55,28 @@ Test Builtin Echo
     @{ECHO}=           Get test cases    ${echo_file_path}
     Simple command test loop             @{ECHO}
 
+Test Redirections
+    [Documentation]    Testing redirection functionality
+    @{REDIR}=          Get test cases    ${redir_file_path}
+    redirection test loop                @{REDIR}
 
 *** Keywords ***
+Redirection test loop
+    [Documentation]    Creates files to receive redirected output during set-up
+    ...                then deletes them after they have been checked.
+    ...                Simple command keyword is used to execute the test case
+    [Arguments]        @{CASES}
+
+    # just for debugging readability
+    log                \n    console=yes
+
+    FOR    ${case}    IN    @{CASES}
+        # create files
+        Simple Command    ${case}
+        # check files
+        # delete files
+    END
+
 Simple command test loop
     [Documentation]    Takes a list of test cases and runs them using Simple Command
     [Arguments]        @{CASES}
