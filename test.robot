@@ -71,10 +71,10 @@ Redirection test loop
     log                \n    console=yes
 
     FOR    ${case}    IN    @{CASES}
-        # create files
+        Create redirection files
         Simple Command    ${case}
         # check files
-        # delete files
+        Delete redirection files
     END
 
 Simple command test loop
@@ -111,3 +111,6 @@ Command
     [Arguments]        ${arg_string}      ${target_shell}
     ${result}          run command        ${arg_string}      ${target_shell}
     RETURN             ${result}
+
+Delete redirection files
+    [Documnetation]    Sets up files so
