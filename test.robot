@@ -16,6 +16,7 @@ ${diff_OK}           ${0}
 
 ${TEMP_DIR}          temp
 ${echo_file_path}    test_cases/echo_test_cases.txt
+${redir_file_path}    test_cases/redirection_test_cases.txt
 
 # TODO
 # Good beginner tasks
@@ -71,7 +72,6 @@ Redirection test loop
     log                \n    console=yes
 
     FOR    ${case}    IN    @{CASES}
-        Create redirection files
         Simple Command    ${case}
         # check files
         Delete redirection files
@@ -113,4 +113,10 @@ Command
     RETURN             ${result}
 
 Delete redirection files
-    [Documnetation]    Sets up files so
+    [Documentation]    Removing files containing redirected outputs
+    Remove File        redirection_files/output_files/outfile01_bash
+    Remove File        redirection_files/output_files/outfile01_test
+    Remove File        redirection_files/output_files/outfile02_bash
+    Remove File        redirection_files/output_files/outfile02_test
+    Remove File        redirection_files/output_files/12345_bash
+    Remove File        redirection_files/output_files/12345_test
