@@ -62,6 +62,9 @@ Test Redirections
     redirection test loop                @{REDIR}
 
 *** Keywords ***
+# TODO
+# add a test step which compares the contents of the output files
+# change permissions of invalid_permission files
 Redirection test loop
     [Documentation]    Creates files to receive redirected output during set-up
     ...                then deletes them after they have been checked.
