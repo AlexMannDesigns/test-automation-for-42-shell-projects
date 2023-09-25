@@ -1,6 +1,7 @@
 from robot.api.logger import info, debug, trace, console
 from subprocess import run, PIPE, Popen, TimeoutExpired
 
+
 # timeout in seconds for tests
 TIMEOUT = 5
 # echo command being used to write command-line to pipe
@@ -24,6 +25,7 @@ def result_dict_constructor(case: str = None,
         return_value=return_value
     )
 
+
 def redirection_set_up(command_line: str, shell_path: str) -> str:
     """
         Checks the string for redirection file names, replaces them with
@@ -45,15 +47,29 @@ def redirection_set_up(command_line: str, shell_path: str) -> str:
         "invalid_permission" : "./redirection_files/output_files/invalid_permission",
         "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
     }
+    reference_shell = REF_SHELL in shell_path
+
     for key in input_redirection_files.keys():
         command_line = command_line.replace(key, input_redirection_files[key])
+
     for key in output_redirection_files.keys():
         path = key in command_line
-        if path and REF_SHELL in shell_path:
+        if path and reference_shell:
            command_line = command_line.replace(key, f"{output_redirection_files[key]}_{REF_SHELL}")
         elif path:
             command_line = command_line.replace(key, f"{output_redirection_files[key]}_test")
+
     return command_line
+
+
+def run_redirection_command(command_line: str, shell_path: str) -> dict:
+    # command line will differ slightly due to different redir file paths used
+    original_command_line = command_line
+    command_line = redirection_set_up(command_line, shell_path)
+    result = run_command(command_line, shell_path)
+    result.case = original_command_line
+    return result
+
 
 def run_command(command_line: str, shell_path: str) -> dict:
     """
@@ -67,10 +83,6 @@ def run_command(command_line: str, shell_path: str) -> dict:
         Run returns a class instance from which we can access the necessary
         outputs and return values for the purposes of testing.
     """
-    # command line will differ slightly due to different redir file paths used
-    original_command_line = command_line
-    command_line = redirection_set_up(command_line, shell_path)
-
     ps = Popen((ECHO, command_line), stdout=PIPE)
 
     try:
@@ -82,8 +94,8 @@ def run_command(command_line: str, shell_path: str) -> dict:
             timeout=TIMEOUT,
             )
     except TimeoutExpired:
-        console(f"case: {original_command_line}: Timeout expired, please review")
-        return result_dict_constructor(case=original_command_line)
+        console(f"case: {command_line}: Timeout expired, please review")
+        return result_dict_constructor(case=command_line)
 
     # These are just here for safety, but will almost always never be needed.
     # ps is only being used to run "echo", so should exit before run()
@@ -92,13 +104,13 @@ def run_command(command_line: str, shell_path: str) -> dict:
     ps.wait(timeout=TIMEOUT)
 
     # debugging
-    console(f'\ncase: {original_command_line} | shell = {shell_path}')
+    console(f'\ncase: {command_line} | shell = {shell_path}')
     console(f"return = {result.returncode}")
     console(f"output = {result.stdout}")
     console(f"error = {result.stderr}")
 
     return result_dict_constructor(
-        case=original_command_line,
+        case=command_line,
         output=result.stdout,
         error_output=result.stderr,
         return_value=result.returncode
