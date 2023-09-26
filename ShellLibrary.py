@@ -51,17 +51,13 @@ def redirection_set_up(command_line: str, shell_path: str) -> str:
         Given that strings are immutable in python, we have to create
         copied in a loop.
     """
-    reference_shell = REF_SHELL in shell_path
+    file_name_end = REF_SHELL if REF_SHELL in shell_path else "test"
 
     for key in INPUT_REDIRECTION_FILES.keys():
         command_line = command_line.replace(key, INPUT_REDIRECTION_FILES[key])
 
     for key in OUTPUT_REDIRECTION_FILES.keys():
-        path = key in command_line
-        if path and reference_shell:
-           command_line = command_line.replace(key, f"{OUTPUT_REDIRECTION_FILES[key]}_{REF_SHELL}")
-        elif path:
-            command_line = command_line.replace(key, f"{OUTPUT_REDIRECTION_FILES[key]}_test")
+        command_line = command_line.replace(key, f"{OUTPUT_REDIRECTION_FILES[key]}_{file_name_end}")
 
     return command_line
 
