@@ -1,6 +1,7 @@
 from robot.api.logger import info, debug, trace, console
 from subprocess import run, PIPE, Popen, TimeoutExpired
 
+#### GLOBAL SCOPE VARIABLES ####
 
 # timeout in seconds for tests
 TIMEOUT = 5
@@ -8,6 +9,20 @@ TIMEOUT = 5
 ECHO = "echo"
 # name of reference shell
 REF_SHELL = "bash"
+# files used in redirections
+INPUT_REDIRECTION_FILES = {
+        "input_file": "./redirection_files/input_file",
+        "input_big_file": "./redirection_files/input_big_file",
+        "missing": "./redirection_files/missing",
+        "input12345": "./redirection_files/input""1""2""3""4""5",
+        "file name with spaces": "./redirection_files/file name with spaces"
+    }
+OUTPUT_REDIRECTION_FILES = {
+        "outfile01" : "./redirection_files/output_files/outfile01",
+        "outfile02" : "./redirection_files/output_files/outfile02",
+        "invalid_permission" : "./redirection_files/output_files/invalid_permission",
+        "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
+    }
 
 
 def result_dict_constructor(case: str = None,
@@ -18,6 +33,7 @@ def result_dict_constructor(case: str = None,
         Standardising the returned object from test cases.
         Implementing it this way allows for use of default values.
     """
+    # error message handling should probably go here
     return dict(
         case=case,
         output=output,
@@ -34,35 +50,26 @@ def redirection_set_up(command_line: str, shell_path: str) -> str:
         Given that strings are immutable in python, we have to create
         copied in a loop.
     """
-    input_redirection_files = {
-        "input_file": "./redirection_files/input_file",
-        "input_big_file": "./redirection_files/input_big_file",
-        "missing": "./redirection_files/missing",
-        "input12345": "./redirection_files/input""1""2""3""4""5",
-        "file name with spaces": "./redirection_files/file name with spaces"
-    }
-    output_redirection_files = {
-        "outfile01" : "./redirection_files/output_files/outfile01",
-        "outfile02" : "./redirection_files/output_files/outfile02",
-        "invalid_permission" : "./redirection_files/output_files/invalid_permission",
-        "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
-    }
     reference_shell = REF_SHELL in shell_path
 
-    for key in input_redirection_files.keys():
-        command_line = command_line.replace(key, input_redirection_files[key])
+    for key in INPUT_REDIRECTION_FILES.keys():
+        command_line = command_line.replace(key, INPUT_REDIRECTION_FILES[key])
 
-    for key in output_redirection_files.keys():
+    for key in OUTPUT_REDIRECTION_FILES.keys():
         path = key in command_line
         if path and reference_shell:
-           command_line = command_line.replace(key, f"{output_redirection_files[key]}_{REF_SHELL}")
+           command_line = command_line.replace(key, f"{OUTPUT_REDIRECTION_FILES[key]}_{REF_SHELL}")
         elif path:
-            command_line = command_line.replace(key, f"{output_redirection_files[key]}_test")
+            command_line = command_line.replace(key, f"{OUTPUT_REDIRECTION_FILES[key]}_test")
 
     return command_line
 
 
 def run_redirection_command(command_line: str, shell_path: str) -> dict:
+    """
+        Wrapper function for run_command, which handles the set up for redirection
+        tests.
+    """
     # command line will differ slightly due to different redir file paths used
     original_command_line = command_line
     command_line = redirection_set_up(command_line, shell_path)
