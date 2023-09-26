@@ -56,10 +56,12 @@ Test Builtin Echo
     @{ECHO}=           Get test cases    ${echo_file_path}
     Simple command test loop             @{ECHO}
 
+
 Test Redirections
     [Documentation]    Testing redirection functionality
     @{REDIR}=          Get test cases    ${redir_file_path}
     redirection test loop                @{REDIR}
+
 
 *** Keywords ***
 # TODO
@@ -76,10 +78,11 @@ Redirection test loop
     log                \n    console=yes
 
     FOR    ${case}    IN    @{CASES}
-        Simple Command    ${case}
+        Redirection Command    ${case}
         # check files
         Delete redirection files
     END
+
 
 Simple command test loop
     [Documentation]    Takes a list of test cases and runs them using Simple Command
@@ -92,6 +95,7 @@ Simple command test loop
         Simple Command    ${case}
     END
 
+
 Get test cases
     [Documentation]    Reads test case file given as argument and returns them
     ...                in list format
@@ -100,21 +104,25 @@ Get test cases
     @{case_list}=      Split to lines    ${cases}
     RETURN             @{case_list}
 
+
 Simple command
     [Documentation]    Sends a command to the test shell and compares its output and
     ...                return values with the reference shell
     [Arguments]        ${test_case}
-    ${shell_result}    Command            ${test_case}       ${shell}
-    ${bash_result}     Command            ${test_case}       ${bash}
-    Dictionaries should be equal          ${shell_result}    ${bash_result}
+    ${shell_result}    run command    ${test_case}       ${shell}
+    ${bash_result}     run command    ${test_case}       ${bash}
+    Dictionaries should be equal      ${shell_result}    ${bash_result}
 
-Command
-    [Documentation]    Takes a command line string and runs it in the specified shell
-    ...                Returns a dictionary containing any outputs and the return value.
-    # rename arg_string to command_line for clarity
-    [Arguments]        ${arg_string}      ${target_shell}
-    ${result}          run command        ${arg_string}      ${target_shell}
-    RETURN             ${result}
+
+Redirection command
+    [Documentation]    Sends a command to the test shell via the redirection wrapper
+    ...                function and compares its output and return values with the
+    ...                reference shell
+    [Arguments]        ${test_case}
+    ${shell_result}    run redirection command    ${test_case}       ${shell}
+    ${bash_result}     run redirection command    ${test_case}       ${bash}
+    Dictionaries should be equal                  ${shell_result}    ${bash_result}
+
 
 Delete redirection files
     [Documentation]    Removing files containing redirected outputs
@@ -122,5 +130,7 @@ Delete redirection files
     Remove File        redirection_files/output_files/outfile01_test
     Remove File        redirection_files/output_files/outfile02_bash
     Remove File        redirection_files/output_files/outfile02_test
+    Remove File        redirection_files/output_files/outfile\ with\ spaces_bash
+    Remove File        redirection_files/output_files/outfile\ with\ spaces_test
     Remove File        redirection_files/output_files/12345_bash
     Remove File        redirection_files/output_files/12345_test

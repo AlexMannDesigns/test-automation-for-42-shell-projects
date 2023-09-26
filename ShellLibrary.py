@@ -20,6 +20,7 @@ INPUT_REDIRECTION_FILES = {
 OUTPUT_REDIRECTION_FILES = {
         "outfile01" : "./redirection_files/output_files/outfile01",
         "outfile02" : "./redirection_files/output_files/outfile02",
+        "outfile_spaces": "./redirection_files/output_files/outfile with spaces",
         "invalid_permission" : "./redirection_files/output_files/invalid_permission",
         "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
     }
@@ -74,7 +75,7 @@ def run_redirection_command(command_line: str, shell_path: str) -> dict:
     original_command_line = command_line
     command_line = redirection_set_up(command_line, shell_path)
     result = run_command(command_line, shell_path)
-    result.case = original_command_line
+    result["case"] = original_command_line
     return result
 
 
