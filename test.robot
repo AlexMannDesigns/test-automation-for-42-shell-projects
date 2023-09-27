@@ -76,9 +76,11 @@ Test Redirections
 # granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
 # change global variables to ALL-CAPS for clarity
 Redirection test loop
-    [Documentation]    Creates files to receive redirected output during set-up
-    ...                then deletes them after they have been checked.
-    ...                Simple command keyword is used to execute the test case
+    [Documentation]    Runs commands using the underlying redirection wrapper.
+    ...                The created output files are then checked for equality and
+    ...                then deleted in each iteration.
+    ...                Finally, the output file directory is checked for any files
+    ...                created in error.
     [Arguments]        @{CASES}
 
     # just for debugging readability
@@ -98,7 +100,7 @@ Check output directory
     [Documentation]    After the redirection test files have been deleted, there should
     ...                only be the two permission files remaining in that directory.
     ...                This checks that is definitely the case
-
+    # not tested yet
 
 Check output files
     [Documentation]    Loops through the files in the output_files directory and checks
@@ -129,7 +131,8 @@ Check file contents
 
     #log    ${bash_file}    console=yes
     #log    ${test_file}    console=yes
-    Should be equal    ${bash_file}    ${test_file}
+    # 'as strings' ensures both objects from Get file are compared as string objects
+    Should be equal as strings    ${bash_file}    ${test_file}
 
 
 Simple command test loop
