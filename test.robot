@@ -57,20 +57,23 @@ Test Builtin Echo
     [Documentation]    Testing for the builtin function 'echo'
 
     @{ECHO}=           Get test cases    ${echo_file_path}
-    Simple command test loop             @{ECHO}
+
+    Simple command test loop    @{ECHO}
 
 
 Test Redirections
     [Documentation]    Testing redirection functionality
 
     @{REDIR}=          Get test cases    ${redir_file_path}
-    Redirection test loop                @{REDIR}
+
+    Redirection test loop    @{REDIR}
 
 
 *** Keywords ***
 # TODO
 # change permissions of invalid_permission files
 # make input_big_file a lot bigger!
+# implement check output directory keyword
 # granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
 Redirection test loop
     [Documentation]    Creates files to receive redirected output during set-up
@@ -151,7 +154,7 @@ Get test cases
     ${cases}=          Get file          ${path}
     @{case_list}=      Split to lines    ${cases}
 
-    RETURN             @{case_list}
+    RETURN    @{case_list}
 
 
 Simple command
@@ -162,7 +165,7 @@ Simple command
     ${shell_result}    run command    ${test_case}       ${shell}
     ${bash_result}     run command    ${test_case}       ${bash}
 
-    Dictionaries should be equal      ${shell_result}    ${bash_result}
+    Dictionaries should be equal    ${shell_result}    ${bash_result}
 
 
 Redirection command
@@ -174,7 +177,7 @@ Redirection command
     ${shell_result}    run redirection command    ${test_case}       ${shell}
     ${bash_result}     run redirection command    ${test_case}       ${bash}
 
-    Dictionaries should be equal                  ${shell_result}    ${bash_result}
+    Dictionaries should be equal    ${shell_result}    ${bash_result}
 
 
 Delete redirection files
