@@ -9,14 +9,13 @@ Library          OperatingSystem
 # shell_name should be the name of the binary being tested.
 # shell should be the relative path to that binary
 # bash can be changed to the name of another reference shell
-${shell_name}        42sh
-${shell}             .././${shell_name}
-${bash}              /bin/bash
-${diff_OK}           ${0}
+${shell_name}          42sh
+${shell}               .././${shell_name}
+${bash}                /bin/bash
 
-${TEMP_DIR}          temp
-${echo_file_path}    test_cases/echo_test_cases.txt
-${redir_file_path}    test_cases/redirection_test_cases.txt
+${TEMP_DIR}            temp
+${echo_file_path}      test_cases/echo_test_cases.txt
+${redir_file_path}     test_cases/redirection_test_cases.txt
 
 @{OUTPUT_FILES}=       outfile01    outfile02    outfile with spaces    12345
 ${output_file_path}    ./redirection_files/output_files
@@ -56,21 +55,23 @@ ${output_file_path}    ./redirection_files/output_files
 *** Test Cases ***
 Test Builtin Echo
     [Documentation]    Testing for the builtin function 'echo'
+
     @{ECHO}=           Get test cases    ${echo_file_path}
     Simple command test loop             @{ECHO}
 
 
 Test Redirections
     [Documentation]    Testing redirection functionality
+
     @{REDIR}=          Get test cases    ${redir_file_path}
     Redirection test loop                @{REDIR}
 
 
 *** Keywords ***
 # TODO
-# add a test step which compares the contents of the output files
 # change permissions of invalid_permission files
 # make input_big_file a lot bigger!
+# granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
 Redirection test loop
     [Documentation]    Creates files to receive redirected output during set-up
     ...                then deletes them after they have been checked.
@@ -81,32 +82,44 @@ Redirection test loop
     log                \n    console=yes
 
     FOR    ${case}    IN    @{CASES}
+
         Redirection Command    ${case}
         Check output files
         Delete redirection files
+        #Check output directory
+
     END
+
+
+Check output directory
+    [Documentation]    After the redirection test files have been deleted, there should
+    ...                only be the two permission files remaining in that directory.
+    ...                This checks that is definitely the case
 
 
 Check output files
     [Documentation]    Loops through the files in the output_files directory and checks
     ...                the content of the bash files matches that of the test shell files
+
     FOR    ${file}    IN    @{OUTPUT_FILES}
 
-        ${bash_output_path}=    Set Variable    ${output_file_path}/${file}_bash
-        ${test_output_path}=    Set Variable    ${output_file_path}/${file}_test
+        ${bash_output_path}=    Set Variable      ${output_file_path}/${file}_bash
+        ${test_output_path}=    Set Variable      ${output_file_path}/${file}_test
 
-        ${bash_exists}=    file exists    ${bash_output_path}
-        Run Keyword if    ${bash_exists}    Check file contents    ${bash_output_path}    ${test_output_path}
+        ${bash_exists}=         file exists       ${bash_output_path}
+        ${test_file_exists}=    file exists       ${test_output_path}
+
+        Should be equal         ${bash_exists}    ${test_file_exists}
+
+        Run Keyword if          ${bash_exists}    Check file contents    ${bash_output_path}    ${test_output_path}
+
     END
 
 
 Check file contents
     [Documentation]    Checks that a corresponding test file was created by the redirection
     ...                and that both files have identical contents
-    [Arguments]    ${bash_output_path}    ${test_output_path}
-
-    ${test_file_exists}=    file exists    ${test_output_path}
-    Should be equal    ${test_file_exists}    ${True}
+    [Arguments]        ${bash_output_path}    ${test_output_path}
 
     ${bash_file}=    Get file    ${bash_output_path}
     ${test_file}=    Get file    ${test_output_path}
@@ -124,7 +137,9 @@ Simple command test loop
     log                \n    console=yes
 
     FOR    ${case}    IN    @{CASES}
+
         Simple Command    ${case}
+
     END
 
 
@@ -132,8 +147,10 @@ Get test cases
     [Documentation]    Reads test case file given as argument and returns them
     ...                in list format
     [Arguments]        ${path}
+
     ${cases}=          Get file          ${path}
     @{case_list}=      Split to lines    ${cases}
+
     RETURN             @{case_list}
 
 
@@ -141,8 +158,10 @@ Simple command
     [Documentation]    Sends a command to the test shell and compares its output and
     ...                return values with the reference shell
     [Arguments]        ${test_case}
+
     ${shell_result}    run command    ${test_case}       ${shell}
     ${bash_result}     run command    ${test_case}       ${bash}
+
     Dictionaries should be equal      ${shell_result}    ${bash_result}
 
 
@@ -151,18 +170,19 @@ Redirection command
     ...                function and compares its output and return values with the
     ...                reference shell
     [Arguments]        ${test_case}
+
     ${shell_result}    run redirection command    ${test_case}       ${shell}
     ${bash_result}     run redirection command    ${test_case}       ${bash}
+
     Dictionaries should be equal                  ${shell_result}    ${bash_result}
 
 
 Delete redirection files
     [Documentation]    Removing files containing redirected outputs
-    Remove File        redirection_files/output_files/outfile01_bash
-    Remove File        redirection_files/output_files/outfile01_test
-    Remove File        redirection_files/output_files/outfile02_bash
-    Remove File        redirection_files/output_files/outfile02_test
-    Remove File        redirection_files/output_files/outfile\ with\ spaces_bash
-    Remove File        redirection_files/output_files/outfile\ with\ spaces_test
-    Remove File        redirection_files/output_files/12345_bash
-    Remove File        redirection_files/output_files/12345_test
+
+    FOR    ${file}    IN    @{OUTPUT_FILES}
+
+        Remove File    ${output_file_path}/${file}_bash
+        Remove File    ${output_file_path}/${file}_test
+
+    END
