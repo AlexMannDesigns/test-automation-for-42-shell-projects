@@ -1,0 +1,84 @@
+grep testing <input_file
+grep testing "<input_file" <         input_file
+echo hi < input_file bye bye
+grep testing <input_big_file <input_file
+echo <"input_file" "bonjour       42"
+cat <"file name with spaces"
+cat <input_big_file input_file
+cat <"input12345"
+
+cat <"input_file"
+echo <"input_big_file" | cat <"input_file"
+echo <"input_big_file" | cat "input_file"
+echo <"input_big_file" | echo <"input_file"
+echo hi | cat <"input_file"
+echo hi | cat "input_file"
+cat <"input_file" | echo hi
+cat <"input_file" | grep hello
+cat <"input_big_file" | echo hi
+
+
+ls >outfile01
+ls >         outfile01
+echo hi >         outfile01 bye
+ls >outfile01 >outfile02
+ls >outfile01 >invalid_permission
+ls >"outfile_spaces"
+ls >"outfile12345"
+ls >"outfile01" >invalid_permission >"outfile02"
+ls >invalid_permission >"outfile01" >invalid_permission
+cat <"input_file" >"outfile01"
+echo hi >outfile01 | echo bye
+echo hi >outfile01 >outfile02 | echo bye
+echo hi | echo >outfile01 bye
+echo hi | echo bye >outfile01 >outfile02
+echo hi >outfile01 | echo bye >outfile02
+echo hi >outfile01 >invalid_permission | echo bye
+echo hi >invalid_permission | echo bye
+echo hi >invalid_permission >outfile01 | echo bye
+echo hi | echo bye >invalid_permission
+echo hi | >outfile01 echo bye >invalid_permission
+echo hi | echo bye >invalid_permission >outfile01
+cat <"input_file" >invalid_permission
+cat >invalid_permission <input_file
+
+ls >>outfile01
+ls >>      outfile01
+ls >>outfile01 >outfile02
+ls >outfile01 >>outfile02
+ls >outfile02
+ls >>invalid_permission
+ls >>invalid_permission >>outfile01
+ls >>outfile01 >>invalid_permission
+ls >outfile01 >>outfile02
+
+echo hi >>outfile01 | echo bye
+echo hi >>outfile02 | echo bye
+echo hi | echo >>outfile01 bye
+echo hi | echo bye >>outfile02
+echo hi >>outfile02
+echo hi >>invalid_permission | echo bye
+echo hi >>invalid_permission >outfile01 | echo bye
+echo hi | echo bye >>invalid_permission
+echo hi | echo >>outfile01 bye >invalid_permission
+cat <minishell.h>outfile
+
+
+echo <123 <456 hi | echo 42
+
+cat <missing
+cat <missing | cat
+cat <missing | echo oi
+cat <missing | cat <"input_file"
+
+echo <"input_file" <missing <"input_file"
+echo <missing <"input_file" <missing
+
+ls <missing >>outfile02
+ls >>outfile02 <missing
+
+cat <missing >outfile01
+cat >outfile01 <missing
+cat <missing >invalid_permission
+cat >invalid_permission <missing
+cat >outfile01 <missing >invalid_permission
