@@ -13,7 +13,6 @@ ${shell_name}          42sh
 ${shell}               .././${shell_name}
 ${bash}                /bin/bash
 
-${TEMP_DIR}            temp
 ${echo_file_path}      test_cases/echo_test_cases.txt
 ${redir_file_path}     test_cases/redirection_test_cases.txt
 
@@ -75,6 +74,7 @@ Test Redirections
 # make input_big_file a lot bigger!
 # implement check output directory keyword
 # granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
+# change global variables to ALL-CAPS for clarity
 Redirection test loop
     [Documentation]    Creates files to receive redirected output during set-up
     ...                then deletes them after they have been checked.
@@ -182,6 +182,9 @@ Redirection command
 
 Delete redirection files
     [Documentation]    Removing files containing redirected outputs
+    ...                The Remove File keyword does nothing if the file does not
+    ...                exist. So we can safely loop through all OUTPUT_FILES,
+    ...                without the need for extra checks.
 
     FOR    ${file}    IN    @{OUTPUT_FILES}
 
