@@ -1,5 +1,6 @@
 from robot.api.logger import info, debug, trace, console
 from subprocess import run, PIPE, Popen, TimeoutExpired
+from os import path
 
 #### GLOBAL SCOPE VARIABLES ####
 
@@ -49,7 +50,7 @@ def redirection_set_up(command_line: str, shell_path: str) -> str:
         file paths and returns the updated string
 
         Given that strings are immutable in python, we have to create
-        copied in a loop.
+        copies in a loop.
     """
     file_name_end = REF_SHELL if REF_SHELL in shell_path else "test"
 
@@ -119,3 +120,10 @@ def run_command(command_line: str, shell_path: str) -> dict:
         error_output=result.stderr,
         return_value=result.returncode
         )
+
+
+def file_exists(file_path: str) -> bool:
+    """
+        Takes a file path and returns true if it exists.
+    """
+    return path.isfile(file_path)

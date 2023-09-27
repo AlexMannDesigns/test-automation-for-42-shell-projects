@@ -18,6 +18,9 @@ ${TEMP_DIR}          temp
 ${echo_file_path}    test_cases/echo_test_cases.txt
 ${redir_file_path}    test_cases/redirection_test_cases.txt
 
+@{OUTPUT_FILES}=       outfile01    outfile02    outfile with spaces    12345
+${output_file_path}    ./redirection_files/output_files
+
 # TODO
 # Good beginner tasks
 # (let Alex know if you want to work on something and he'll allocate it to you.
@@ -60,7 +63,7 @@ Test Builtin Echo
 Test Redirections
     [Documentation]    Testing redirection functionality
     @{REDIR}=          Get test cases    ${redir_file_path}
-    redirection test loop                @{REDIR}
+    Redirection test loop                @{REDIR}
 
 
 *** Keywords ***
@@ -79,9 +82,38 @@ Redirection test loop
 
     FOR    ${case}    IN    @{CASES}
         Redirection Command    ${case}
-        # check files
+        Check output files
         Delete redirection files
     END
+
+
+Check output files
+    [Documentation]    Loops through the files in the output_files directory and checks
+    ...                the content of the bash files matches that of the test shell files
+    FOR    ${file}    IN    @{OUTPUT_FILES}
+
+        ${bash_output_path}=    Set Variable    ${output_file_path}/${file}_bash
+        ${test_output_path}=    Set Variable    ${output_file_path}/${file}_test
+
+        ${bash_exists}=    file exists    ${bash_output_path}
+        Run Keyword if    ${bash_exists}    Check file contents    ${bash_output_path}    ${test_output_path}
+    END
+
+
+Check file contents
+    [Documentation]    Checks that a corresponding test file was created by the redirection
+    ...                and that both files have identical contents
+    [Arguments]    ${bash_output_path}    ${test_output_path}
+
+    ${test_file_exists}=    file exists    ${test_output_path}
+    Should be equal    ${test_file_exists}    ${True}
+
+    ${bash_file}=    Get file    ${bash_output_path}
+    ${test_file}=    Get file    ${test_output_path}
+
+    #log    ${bash_file}    console=yes
+    #log    ${test_file}    console=yes
+    Should be equal    ${bash_file}    ${test_file}
 
 
 Simple command test loop
