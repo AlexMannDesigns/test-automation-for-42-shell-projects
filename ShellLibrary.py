@@ -26,7 +26,17 @@ OUTPUT_REDIRECTION_FILES = {
         "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
     }
 
+
 #### FUNCTIONS ####
+
+def error_message_handling(error_output: str):
+    """
+        Placeholder for now. Will edit out the start of the error
+        message text so that the pertinent part of the message
+        can be properly compared to the ref shell.
+    """
+    return ""
+
 
 def result_dict_constructor(case: str = None,
                             output: str = None,
@@ -36,11 +46,12 @@ def result_dict_constructor(case: str = None,
         Standardising the returned object from test cases.
         Implementing it this way allows for use of default values.
     """
-    # error message handling should probably go here
+    # error message handling should probably go here, just returning an empty string for now
+    editted_error_output = error_message_handling(error_output)
     return dict(
         case=case,
         output=output,
-        error_output=error_output,
+        error_output=editted_error_output,
         return_value=return_value
     )
 
@@ -124,7 +135,7 @@ def run_command(command_line: str, shell_path: str) -> dict:
         case=command_line,
         output=result.stdout,
         # just for testing while better error message comparison has not been implemented
-        error_output="",#result.stderr,
+        error_output=result.stderr,
         return_value=result.returncode
         )
 
