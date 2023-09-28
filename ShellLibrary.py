@@ -26,6 +26,7 @@ OUTPUT_REDIRECTION_FILES = {
         "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
     }
 
+#### FUNCTIONS ####
 
 def result_dict_constructor(case: str = None,
                             output: str = None,
@@ -55,10 +56,12 @@ def redirection_set_up(command_line: str, shell_path: str) -> str:
     file_name_end = REF_SHELL if REF_SHELL in shell_path else "test"
 
     for key in INPUT_REDIRECTION_FILES.keys():
-        command_line = command_line.replace(key, INPUT_REDIRECTION_FILES[key])
+        file = INPUT_REDIRECTION_FILES[key]
+        command_line = command_line.replace(key, file)
 
     for key in OUTPUT_REDIRECTION_FILES.keys():
-        command_line = command_line.replace(key, f"{OUTPUT_REDIRECTION_FILES[key]}_{file_name_end}")
+        file = f"{OUTPUT_REDIRECTION_FILES[key]}_{file_name_end}"
+        command_line = command_line.replace(key, file)
 
     return command_line
 
@@ -67,8 +70,10 @@ def run_redirection_command(command_line: str, shell_path: str) -> dict:
     """
         Wrapper function for run_command, which handles the set up for redirection
         tests.
+        Command line will differ after it has been expanded with the actual file
+        paths - so the original case is saved and added to the result for ease of
+        reference.
     """
-    # command line will differ slightly due to different redir file paths used
     original_command_line = command_line
     command_line = redirection_set_up(command_line, shell_path)
     result = run_command(command_line, shell_path)
