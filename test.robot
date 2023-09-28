@@ -9,15 +9,18 @@ Library          OperatingSystem
 # shell_name should be the name of the binary being tested.
 # shell should be the relative path to that binary
 # bash can be changed to the name of another reference shell
-${shell_name}          42sh
-${shell}               .././${shell_name}
-${bash}                /bin/bash
+${shell_name}           42sh
+${shell}                .././${shell_name}
+${bash}                 /bin/bash
 
-${echo_file_path}      test_cases/echo_test_cases.txt
-${redir_file_path}     test_cases/redirection_test_cases.txt
+${echo_file_path}       test_cases/echo_test_cases.txt
+${redir_file_path}      test_cases/redirection_test_cases.txt
 
-@{OUTPUT_FILES}=       outfile01    outfile02    outfile with spaces    12345
-${output_file_path}    ./redirection_files/output_files
+@{OUTPUT_FILES}=        outfile01    outfile02    outfile with spaces    12345
+${output_file_path}     ./redirection_files/output_files
+
+${INVALID_FILE_BASH}    ./redirection_files/output_files/invalid_permission_bash
+${INVALID_FILE_TEST}    ./redirection_files/output_files/invalid_permission_test
 
 # TODO
 # Good beginner tasks
@@ -119,6 +122,8 @@ Check output files
         Run Keyword if          ${bash_exists}    Check file contents    ${bash_output_path}    ${test_output_path}
 
     END
+
+    Check file contents    ${INVALID_FILE_BASH}    ${INVALID_FILE_TEST}
 
 
 Check file contents
