@@ -22,6 +22,7 @@ ${output_file_path}     ./redirection_files/output_files
 ${INVALID_FILE_BASH}    ./redirection_files/output_files/invalid_permission_bash
 ${INVALID_FILE_TEST}    ./redirection_files/output_files/invalid_permission_test
 
+
 # TODO
 # Good beginner tasks
 # (let Alex know if you want to work on something and he'll allocate it to you.
@@ -73,9 +74,6 @@ Test Redirections
 
 *** Keywords ***
 # TODO
-# change permissions of invalid_permission files
-# make input_big_file a lot bigger!
-# implement check output directory keyword
 # granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
 # change global variables to ALL-CAPS for clarity
 Redirection test loop
@@ -94,7 +92,7 @@ Redirection test loop
         Redirection Command    ${case}
         Check output files
         Delete redirection files
-        #Check output directory
+        Check output directory
 
     END
 
@@ -102,8 +100,10 @@ Redirection test loop
 Check output directory
     [Documentation]    After the redirection test files have been deleted, there should
     ...                only be the two permission files remaining in that directory.
-    ...                This checks that is definitely the case
-    # not tested yet
+
+    ${Number_of_files}    Count items in directory    ${output_file_path}
+    Should be equal       ${Number_of_files}          ${2}
+
 
 Check output files
     [Documentation]    Loops through the files in the output_files directory and checks
@@ -134,9 +134,6 @@ Check file contents
     ${bash_file}=    Get file    ${bash_output_path}
     ${test_file}=    Get file    ${test_output_path}
 
-    #log    ${bash_file}    console=yes
-    #log    ${test_file}    console=yes
-    # 'as strings' ensures both objects from Get file are compared as string objects
     Should be equal as strings    ${bash_file}    ${test_file}
 
 
