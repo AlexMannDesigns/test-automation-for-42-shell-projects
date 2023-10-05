@@ -10,12 +10,13 @@ Library          OperatingSystem
 # shell should be the relative path to that binary
 # bash can be changed to the name of another reference shell
 ${shell_name}        42sh
-${shell}             .././${shell_name}
+${shell}             42sh/${shell_name}
 ${bash}              /bin/bash
 ${diff_OK}           ${0}
 
 ${TEMP_DIR}          temp
 ${echo_file_path}    test_cases/echo_test_cases.txt
+${envVar_file_path}  test_cases/environment_variables_test_cases.txt
 
 # TODO
 # Good beginner tasks
@@ -54,6 +55,11 @@ Test Builtin Echo
     [Documentation]    Testing for the builtin function 'echo'
     @{ECHO}=           Get test cases    ${echo_file_path}
     Simple command test loop             @{ECHO}
+
+Test environment variables
+    [Documentation]    Testing for the environment variables
+    @{ENV_VAR}=        Get test cases    ${envVar_file_path}
+    Simple command test loop             @{ENV_VAR}
 
 
 *** Keywords ***

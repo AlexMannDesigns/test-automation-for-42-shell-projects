@@ -1,0 +1,24 @@
+export loop='bonjour$loop' ; echo $loop
+echo $PATH
+echo "$HOME"
+echo '$HOME'
+echo $HOME
+
+echo '"$USER"' "$USER"
+echo $USER$var\$USER$USER\$USERtest$USER
+echo '1st $USER quote ' $USER 2nd quote' close $USER 1st'
+export var=at ; c$var Makefile
+export var="cat Makefile | grep >" ; echo $var
+unset var; echo $var bonjour; export $var
+export "test=ici"=coucou ; echo $test
+$SHLVL
+$test
+export var=s\ -la ; l$var
+echo "\\$HOME \\\$HOME \\\\$HOME $HOME $HOME $HOME"
+export test="file1 file2" ; echo hello >$test
+export test="  foo    bar  " ; echo ab$test
+export var="  truc"; echo $var
+export var="truc  "; echo $var | cat -e
+echo bonjour > $test
+echo "hello $USER " > file | grep h | cat << eof | cat >> file | echo 'done $USER'
+echo $HI'$PWD$?''$?$PWD""""""""'"$PWD"$$$$$$?''"" "test$?"
