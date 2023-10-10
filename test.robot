@@ -140,8 +140,8 @@ Check file contents
     ...                and that both files have identical contents
     [Arguments]        ${bash_output_path}    ${test_output_path}
 
-    ${bash_file}=    Get file    ${bash_output_path}
-    ${test_file}=    Get file    ${test_output_path}
+    ${bash_file}=    Get file     ${bash_output_path}
+    ${test_file}=    Get file     ${test_output_path}
 
     Should be equal as strings    ${bash_file}    ${test_file}
 

@@ -1,0 +1,31 @@
+echo <"input_big_file" | cat <"input_file"
+echo <"input_big_file" | cat "input_file"
+echo <"input_big_file" | echo <"input_file"
+echo hi | cat <"input_file"
+echo hi | cat "input_file"
+cat <"input_file" | echo hi
+cat <"input_file" | grep hello
+cat <"input_big_file" | echo hi
+echo hi >outfile01 | echo bye
+echo hi >outfile01 >outfile02 | echo bye
+echo hi | echo >outfile01 bye
+echo hi | echo bye >outfile01 >outfile02
+echo hi >outfile01 | echo bye >outfile02
+echo hi >outfile01 >invalid_permission | echo bye
+echo hi >invalid_permission | echo bye
+echo hi >invalid_permission >outfile01 | echo bye
+echo hi | echo bye >invalid_permission
+echo hi | >outfile01 echo bye >invalid_permission
+echo hi | echo bye >invalid_permission >outfile01
+echo hi >>outfile01 | echo bye
+echo hi >>outfile02 | echo bye
+echo hi | echo >>outfile01 bye
+echo hi | echo bye >>outfile02
+echo hi >>invalid_permission | echo bye
+echo hi >>invalid_permission >outfile01 | echo bye
+echo hi | echo bye >>invalid_permission
+echo hi | echo >>outfile01 bye >invalid_permission
+echo <123 <456 hi | echo 42
+cat <missing | cat
+cat <missing | echo oi
+cat <missing | cat <"input_file"
