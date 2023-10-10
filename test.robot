@@ -98,12 +98,12 @@ Redirection test loop
     ...                then deleted in each iteration.
     ...                Finally, the output file directory is checked for any files
     ...                created in error.
-    [Arguments]        @{CASES}
+    [Arguments]        @{case_list}
 
     # just for debugging readability
     log                \n    console=yes
 
-    FOR    ${case}    IN    @{CASES}
+    FOR    ${case}    IN    @{case_list}
 
         Redirection Command        ${case}
         Check output files
@@ -155,12 +155,12 @@ Check file contents
 
 Simple command test loop
     [Documentation]    Takes a list of test cases and runs them using Simple Command
-    [Arguments]        @{CASES}
+    [Arguments]        @{case_list}
 
     # just for debugging readability
     log                \n    console=yes
 
-    FOR    ${case}    IN    @{CASES}
+    FOR    ${case}    IN    @{case_list}
 
         Simple Command    ${case}
 
