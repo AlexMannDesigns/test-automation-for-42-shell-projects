@@ -9,15 +9,15 @@ Library          OperatingSystem
 # shell_name should be the name of the binary being tested.
 # shell should be the relative path to that binary
 # bash can be changed to the name of another reference shell
-${shell_name}           42sh
-${shell}                .././${shell_name}
-${bash}                 /bin/bash
+${SHELL_NAME}           42sh
+${SHELL}                .././${SHELL_NAME}
+${BASH}                 /bin/bash
 
-${echo_file_path}       test_cases/echo_test_cases.txt
-${redir_file_path}      test_cases/redirection_test_cases.txt
+${ECHO_FILE_PATH}       test_cases/echo_test_cases.txt
+${REDIR_FILE_PATH}      test_cases/redirection_test_cases.txt
 
 @{OUTPUT_FILES}=        outfile01    outfile02    outfile with spaces    12345
-${output_file_path}     ./redirection_files/output_files
+${OUTPUT_FILE_PATH}     ./redirection_files/output_files
 
 ${INVALID_FILE_BASH}    ./redirection_files/output_files/invalid_permission_bash
 ${INVALID_FILE_TEST}    ./redirection_files/output_files/invalid_permission_test
@@ -42,7 +42,7 @@ ${INVALID_FILE_TEST}    ./redirection_files/output_files/invalid_permission_test
 
 # exit tests will need to be handled slightly differently because of how bash prints 'exit'
 
-# the hard-coded path to the bash binary in the ${bash} variable may not work on some
+# the hard-coded path to the bash binary in the ${BASH} variable may not work on some
 # systems. There should be a function to locate the ref shell when assigning that
 # variable
 
@@ -59,17 +59,17 @@ ${INVALID_FILE_TEST}    ./redirection_files/output_files/invalid_permission_test
 Test Builtin Echo
     [Documentation]    Testing for the builtin function 'echo'
 
-    @{ECHO}=           Get test cases    ${echo_file_path}
+    @{echo_case_list}=          Get test cases    ${ECHO_FILE_PATH}
 
-    Simple command test loop    @{ECHO}
+    Simple command test loop    @{echo_case_list}
 
 
 Test Redirections
     [Documentation]    Testing redirection functionality
 
-    @{REDIR}=          Get test cases    ${redir_file_path}
+    @{redir_case_list}=      Get test cases    ${REDIR_FILE_PATH}
 
-    Redirection test loop    @{REDIR}
+    Redirection test loop    @{redir_case_list}
 
 
 *** Keywords ***
@@ -101,7 +101,7 @@ Check output directory
     [Documentation]    After the redirection test files have been deleted, there should
     ...                only be the two permission files remaining in that directory.
 
-    ${Number_of_files}    Count items in directory    ${output_file_path}
+    ${Number_of_files}    Count items in directory    ${OUTPUT_FILE_PATH}
     Should be equal       ${Number_of_files}          ${2}
 
 
@@ -111,8 +111,8 @@ Check output files
 
     FOR    ${file}    IN    @{OUTPUT_FILES}
 
-        ${bash_output_path}=    Set Variable      ${output_file_path}/${file}_bash
-        ${test_output_path}=    Set Variable      ${output_file_path}/${file}_test
+        ${bash_output_path}=    Set Variable      ${OUTPUT_FILE_PATH}/${file}_bash
+        ${test_output_path}=    Set Variable      ${OUTPUT_FILE_PATH}/${file}_test
 
         ${bash_exists}=         file exists       ${bash_output_path}
         ${test_file_exists}=    file exists       ${test_output_path}
@@ -167,8 +167,8 @@ Simple command
     ...                return values with the reference shell
     [Arguments]        ${test_case}
 
-    ${shell_result}    run command    ${test_case}       ${shell}
-    ${bash_result}     run command    ${test_case}       ${bash}
+    ${shell_result}    run command    ${test_case}       ${SHELL}
+    ${bash_result}     run command    ${test_case}       ${BASH}
 
     Dictionaries should be equal    ${shell_result}    ${bash_result}
 
@@ -179,8 +179,8 @@ Redirection command
     ...                reference shell
     [Arguments]        ${test_case}
 
-    ${shell_result}    run redirection command    ${test_case}       ${shell}
-    ${bash_result}     run redirection command    ${test_case}       ${bash}
+    ${shell_result}    run redirection command    ${test_case}       ${SHELL}
+    ${bash_result}     run redirection command    ${test_case}       ${BASH}
 
     Dictionaries should be equal    ${shell_result}    ${bash_result}
 
@@ -193,7 +193,7 @@ Delete redirection files
 
     FOR    ${file}    IN    @{OUTPUT_FILES}
 
-        Remove File    ${output_file_path}/${file}_bash
-        Remove File    ${output_file_path}/${file}_test
+        Remove File    ${OUTPUT_FILE_PATH}/${file}_bash
+        Remove File    ${OUTPUT_FILE_PATH}/${file}_test
 
     END

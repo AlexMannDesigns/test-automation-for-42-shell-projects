@@ -38,10 +38,8 @@ def error_message_handling(error_output: str):
     return ""
 
 
-def result_dict_constructor(case: str = None,
-                            output: str = None,
-                            error_output: str = None,
-                            return_value: int = None) -> dict:
+def result_dict_constructor(case: str = None, output: str = None,
+                            error_output: str = None, return_value: int = None) -> dict:
     """
     Standardising the returned object from test cases.
     Implementing it this way allows for use of default values.
