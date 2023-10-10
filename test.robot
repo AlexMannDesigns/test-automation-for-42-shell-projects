@@ -9,18 +9,19 @@ Library          OperatingSystem
 # shell_name should be the name of the binary being tested.
 # shell should be the relative path to that binary
 # bash can be changed to the name of another reference shell
-${SHELL_NAME}           42sh
-${SHELL}                .././${SHELL_NAME}
-${BASH}                 /bin/bash
+${SHELL_NAME}              42sh
+${SHELL}                   .././${SHELL_NAME}
+${BASH}                    /bin/bash
 
-${ECHO_FILE_PATH}       test_cases/echo_test_cases.txt
-${REDIR_FILE_PATH}      test_cases/redirection_test_cases.txt
+${ECHO_FILE_PATH}          test_cases/echo_test_cases.txt
+${REDIR_FILE_PATH}         test_cases/redirection_test_cases.txt
+${REDIR_PIPE_FILE_PATH}    test_cases/redirection_test_cases_with_pipes.txt
 
-@{OUTPUT_FILES}=        outfile01    outfile02    outfile with spaces    12345
-${OUTPUT_FILE_PATH}     ./redirection_files/output_files
+@{OUTPUT_FILES}=           outfile01    outfile02    outfile with spaces    12345
+${OUTPUT_FILE_PATH}        ./redirection_files/output_files
 
-${INVALID_FILE_BASH}    ./redirection_files/output_files/invalid_permission_bash
-${INVALID_FILE_TEST}    ./redirection_files/output_files/invalid_permission_test
+${INVALID_FILE_BASH}       ./redirection_files/output_files/invalid_permission_bash
+${INVALID_FILE_TEST}       ./redirection_files/output_files/invalid_permission_test
 
 
 # TODO
@@ -72,10 +73,18 @@ Test Redirections
     Redirection test loop    @{redir_case_list}
 
 
+Test Redirections with Pipes
+    [Documentation]    Testing redirection functionality again, but these require pipes
+    ...                to have been implemented correctly in the tested shell
+
+    @{redir_pipe_case_list}=    Get test cases    ${REDIR_PIPE_FILE_PATH}
+
+    Redirection test loop       @{redir_pipe_case_list}
+
+
 *** Keywords ***
 # TODO
 # granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
-# change global variables to ALL-CAPS for clarity
 Redirection test loop
     [Documentation]    Runs commands using the underlying redirection wrapper.
     ...                The created output files are then checked for equality and
@@ -89,7 +98,7 @@ Redirection test loop
 
     FOR    ${case}    IN    @{CASES}
 
-        Redirection Command    ${case}
+        Redirection Command        ${case}
         Check output files
         Delete redirection files
         Check output directory

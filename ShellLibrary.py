@@ -2,7 +2,7 @@ from robot.api.logger import info, debug, trace, console
 from subprocess import run, PIPE, Popen, TimeoutExpired
 from os import path
 
-#### GLOBAL SCOPE VARIABLES ####
+#### GLOBAL SCOPE CONSTANTS ####
 
 # timeout in seconds for tests
 TIMEOUT = 5
