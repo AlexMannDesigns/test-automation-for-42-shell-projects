@@ -51,7 +51,6 @@ ${INVALID_FILE_TEST}       ./redirection_files/output_files/invalid_permission_t
 # More advanced stuff, or stuff that is either lower priority or bottle-necked:
 # Come up with a better process for task allocation
 # add a bit of visual pizazz to the console logs, now are a bit stale and hard to read
-# A different testing process will be required to check redirections are working properly - Alex
 # env argument of run() can be used to test environment and variable things
 # Move keywords to a separate resources file
 # To look into:
@@ -93,8 +92,6 @@ Test Redirections and File Descriptor Aggregation
 
 
 *** Keywords ***
-# TODO
-# granularise test cases a little further - redirections only, pipes, fd agg, redirections and pipes
 Redirection test loop
     [Documentation]    Runs commands using the underlying redirection wrapper.
     ...                The created output files are then checked for equality and
