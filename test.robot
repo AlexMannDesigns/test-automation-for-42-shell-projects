@@ -16,8 +16,9 @@ ${BASH}                    /bin/bash
 ${ECHO_FILE_PATH}          test_cases/echo_test_cases.txt
 ${REDIR_FILE_PATH}         test_cases/redirection_test_cases.txt
 ${REDIR_PIPE_FILE_PATH}    test_cases/redirection_test_cases_with_pipes.txt
+${REDIR_AGGR_FILE_PATH}    test_cases/file_descriptor_aggregation_tests.txt
 
-@{OUTPUT_FILES}=           outfile01    outfile02    outfile with spaces    12345
+@{OUTPUT_FILES}=           outfile01    outfile02    outfile03    outfile04    outfile05    outfile with spaces    12345
 ${OUTPUT_FILE_PATH}        ./redirection_files/output_files
 
 ${INVALID_FILE_BASH}       ./redirection_files/output_files/invalid_permission_bash
@@ -80,6 +81,15 @@ Test Redirections with Pipes
     @{redir_pipe_case_list}=    Get test cases    ${REDIR_PIPE_FILE_PATH}
 
     Redirection test loop       @{redir_pipe_case_list}
+
+
+Test Redirections and File Descriptor Aggregation
+    [Documentation]    Testing redirection functionality yet again, but these cases
+    ...                include file descriptor aggregation '>&'
+
+    @{redir_aggr_case_list}=    Get test cases    ${REDIR_AGGR_FILE_PATH}
+
+    Redirection test loop      @{redir_aggr_case_list}
 
 
 *** Keywords ***

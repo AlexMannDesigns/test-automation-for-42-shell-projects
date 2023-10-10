@@ -1,0 +1,57 @@
+>&- echo stdoutclosed
+1>&- echo stdoutclosed
+>&- missing
+0>&- missing
+1>&- missing
+2>&- missing
+0>&- echo stdinclosed
+>&-  echo stdout
+0<&- cat < input_file
+cat < input_file 0<&-
+cat 2< input_file
+2>&- missing
+2>&- 2>&1 ls missing
+cat 5>outfile01 <&5
+cat 5>outfile01 <&5 5>outfile01
+ls > outfile01 > outfile02 > outfile03 > outfile04 > outfile05
+echo why > outfile01 > outfile02 > outfile03 > outfile04 > outfile05
+ls > outfile01 > outfile02 > outfile03 > outfile04 > outfile05 1>&3
+ls > outfile01 > outfile02 > outfile03 3>outfile04 > outfile05 1>&3
+echo hello > outfile01 3>outfile02 > outfile03 >&3
+echo hello > outfile01 > outfile02 > outfile03 3>outfile04 > outfile05 1>&7
+echo hello > outfile01 > outfile02 -1>outfile02
+echo hello > outfile01 > outfile02 --1>outfile02
+echo hello > outfile01 > outfile02 +1>outfile02
+echo hello > outfile01 > outfile02 ++1>outfile02
+ls missing 2> outfile01
+ls missing input_file 2>outfile01 1>&2
+cat missing 2>&1
+cat missing 2>&1 > outfile01
+cat missing > outfile01 2>&1
+echo hello 1>&2
+echo hello >&-
+echo hello >&- 2>&-
+cat missing >&-
+cat missing 2>&-
+echo hello 7>outfile01 6>&8;
+echo hello 7>outfile01 1>&7
+cat < input_file
+cat 2<input_file <&2
+cat 2< input_file <&2 7>outfile01 >&7
+cat 2< input_file <&2 7>outfile01 4>&7 1>&4
+echo hello 7>outfile01 7>&1
+echo hello 3>outfile01 >&3
+echo hello 3>outfile01 1>&3 >&-
+echo hello 3>outfile01 >&- 1>&3
+echo hello > outfile01 > outfile02 > outfile03 4>outfile04 > outfile05 1>&4 world
+echo hello 7>&1 7>outfile01
+echo hello 7>outfile01 6>&1
+echo hello 3> outfile01 1>&3 > outfile02
+echo hello 56>&1 >&56
+echo lol <&- | cat -e <input_file
+echo lmao >&- | echo lmao >&- | echo lilo
+echo first >outfile01 | echo second >outfile02 | echo third >outfile03
+ls 255>&- 0>&- 1>&- 2>&- 3>&- 4>&- 5>&-
+ls missing 3>outfile01 >&- 2>&3
+ls missing >&- 3> outfile01 2>&3
+ls missing >&- 3> outfile01 7>&3 2>&7

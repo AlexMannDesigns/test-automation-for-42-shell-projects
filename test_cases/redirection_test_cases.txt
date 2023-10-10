@@ -10,6 +10,7 @@ cat <"input_file"
 ls >outfile01
 ls >         outfile01
 echo hi >         outfile01 bye
+> outfile01 echo hi
 ls >outfile01 >outfile02
 ls >outfile01 >invalid_permission
 ls >"outfile_spaces"

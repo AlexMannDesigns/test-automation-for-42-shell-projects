@@ -21,6 +21,9 @@ INPUT_REDIRECTION_FILES = {
 OUTPUT_REDIRECTION_FILES = {
         "outfile01": "./redirection_files/output_files/outfile01",
         "outfile02": "./redirection_files/output_files/outfile02",
+        "outfile03": "./redirection_files/output_files/outfile03",
+        "outfile04": "./redirection_files/output_files/outfile04",
+        "outfile05": "./redirection_files/output_files/outfile05",
         "outfile_spaces": "./redirection_files/output_files/outfile with spaces",
         "invalid_permission" : "./redirection_files/output_files/invalid_permission",
         "outfile12345": "./redirection_files/output_files/""1""2""3""4""5"
