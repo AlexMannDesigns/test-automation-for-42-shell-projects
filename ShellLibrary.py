@@ -31,9 +31,9 @@ OUTPUT_REDIRECTION_FILES = {
 
 def error_message_handling(error_output: str):
     """
-        Placeholder for now. Will edit out the start of the error
-        message text so that the pertinent part of the message
-        can be properly compared to the ref shell.
+    Placeholder for now. Will edit out the start of the error
+    message text so that the pertinent part of the message
+    can be properly compared to the ref shell.
     """
     return ""
 
@@ -43,8 +43,8 @@ def result_dict_constructor(case: str = None,
                             error_output: str = None,
                             return_value: int = None) -> dict:
     """
-        Standardising the returned object from test cases.
-        Implementing it this way allows for use of default values.
+    Standardising the returned object from test cases.
+    Implementing it this way allows for use of default values.
     """
     # error message handling should probably go here, just returning an empty string for now
     editted_error_output = error_message_handling(error_output)
@@ -58,11 +58,11 @@ def result_dict_constructor(case: str = None,
 
 def redirection_set_up(command_line: str, shell_path: str) -> str:
     """
-        Checks the string for redirection file names, replaces them with
-        file paths and returns the updated string
+    Checks the string for redirection file names, replaces them with
+    file paths and returns the updated string
 
-        Given that strings are immutable in python, we have to create
-        copies in a loop.
+    Given that strings are immutable in python, we have to create
+    copies in a loop.
     """
     file_name_end = REF_SHELL if REF_SHELL in shell_path else "test"
 
@@ -79,11 +79,11 @@ def redirection_set_up(command_line: str, shell_path: str) -> str:
 
 def run_redirection_command(command_line: str, shell_path: str) -> dict:
     """
-        Wrapper function for run_command, which handles the set up for redirection
-        tests.
-        Command line will differ after it has been expanded with the actual file
-        paths - so the original case is saved and added to the result for ease of
-        reference.
+    Wrapper function for run_command, which handles the set up for redirection
+    tests.
+    Command line will differ after it has been expanded with the actual file
+    paths - so the original case is saved and added to the result for ease of
+    reference.
     """
     original_command_line = command_line
     command_line = redirection_set_up(command_line, shell_path)
@@ -95,15 +95,15 @@ def run_redirection_command(command_line: str, shell_path: str) -> dict:
 
 def run_command(command_line: str, shell_path: str) -> dict:
     """
-        Runs the given "command_line" in the shell identified by "shell_path"
+    Runs the given "command_line" in the shell identified by "shell_path"
 
-        Popen executes a child process. For our purposes, we are echo-ing the
-        test case specified in command_line onto a pipe, which can then be read
-        by the shell.
+    Popen executes a child process. For our purposes, we are echo-ing the
+    test case specified in command_line onto a pipe, which can then be read
+    by the shell.
 
-        run function: https://docs.python.org/3/library/subprocess.html#subprocess.run
-        Run returns a class instance from which we can access the necessary
-        outputs and return values for the purposes of testing.
+    run function: https://docs.python.org/3/library/subprocess.html#subprocess.run
+    Run returns a class instance from which we can access the necessary
+    outputs and return values for the purposes of testing.
     """
     ps = Popen((ECHO, command_line), stdout=PIPE)
 
@@ -142,6 +142,6 @@ def run_command(command_line: str, shell_path: str) -> dict:
 
 def file_exists(file_path: str) -> bool:
     """
-        Takes a file path and returns true if it exists.
+    Takes a file path and returns true if it exists.
     """
     return path.isfile(file_path)
