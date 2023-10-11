@@ -104,7 +104,8 @@ Redirection test loop
     log                \n    console=yes
 
     FOR    ${case}    IN    @{case_list}
-
+        
+        sleep                      ${0.1}
         Redirection Command        ${case}
         Check output files
         Delete redirection files
