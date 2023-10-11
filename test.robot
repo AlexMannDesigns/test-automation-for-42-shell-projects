@@ -48,6 +48,10 @@ ${INVALID_FILE_TEST}       ./redirection_files/output_files/invalid_permission_t
 # systems. There should be a function to locate the ref shell when assigning that
 # variable
 
+# Git does not fully track file permissions (chmod) only the execution rights.
+# Add a step to redirection testing to set the permissions of invalid_permission files
+# in output to read-only (444)
+
 # More advanced stuff, or stuff that is either lower priority or bottle-necked:
 # Come up with a better process for task allocation
 # add a bit of visual pizazz to the console logs, now are a bit stale and hard to read
