@@ -10,6 +10,8 @@ TIMEOUT = 5
 ECHO = "echo"
 # name of reference shell
 REF_SHELL = "bash"
+# minishell string
+MINISHELL = "minishell"
 # files used in redirections
 INPUT_REDIRECTION_FILES = {
         "input_file": "./redirection_files/input_file",
@@ -41,13 +43,24 @@ def error_message_handling(error_output: str):
     return ""
 
 
+def tidy_minishell_output():
+    """
+    When running tests on minishell, we need to remove the first
+    and last lines of the output string
+    """
+    pass
+
+
 def result_dict_constructor(case: str = None, output: str = None,
-                            error_output: str = None, return_value: int = None) -> dict:
+                            error_output: str = None, return_value: int = None,
+                            minishell: bool = False) -> dict:
     """
     Standardising the returned object from test cases.
     Implementing it this way allows for use of default values.
     """
     # error message handling should probably go here, just returning an empty string for now
+    if minishell:
+        output = tidy_minishell_output(output)
     editted_error_output = error_message_handling(error_output)
     return dict(
         case=case,
@@ -137,7 +150,8 @@ def run_command(command_line: str, shell_path: str) -> dict:
         output=result.stdout,
         # just for testing while better error message comparison has not been implemented
         error_output=result.stderr,
-        return_value=result.returncode
+        return_value=result.returncode,
+        minishell=MINISHELL in shell_path
         )
 
 

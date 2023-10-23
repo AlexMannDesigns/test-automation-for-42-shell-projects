@@ -9,7 +9,8 @@ Library          OperatingSystem
 # shell_name should be the name of the binary being tested.
 # shell should be the relative path to that binary
 # bash can be changed to the name of another reference shell
-${SHELL_NAME}              42sh
+${SHELL_NAME}              minishell
+# 42sh
 ${SHELL}                   .././${SHELL_NAME}
 ${BASH}                    /bin/bash
 
