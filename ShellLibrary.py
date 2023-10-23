@@ -43,12 +43,13 @@ def error_message_handling(error_output: str):
     return ""
 
 
-def tidy_minishell_output():
+def tidy_minishell_output(output: str) -> str:
     """
     When running tests on minishell, we need to remove the first
-    and last lines of the output string
+    and last lines of the output string.  We can do a cheeky slice
+    operation to handle this.
     """
-    pass
+    return output[output.find('\n') + 1:output.rfind('\n') + 1]
 
 
 def result_dict_constructor(case: str = None, output: str = None,
@@ -61,6 +62,7 @@ def result_dict_constructor(case: str = None, output: str = None,
     # error message handling should probably go here, just returning an empty string for now
     if minishell:
         output = tidy_minishell_output(output)
+        console(f"amended output = *{output}*")
     editted_error_output = error_message_handling(error_output)
     return dict(
         case=case,
@@ -126,7 +128,7 @@ def run_command(command_line: str, shell_path: str) -> dict:
             shell_path,
             capture_output=True,
             stdin=ps.stdout,
-            #text=True, # True returns a string, False returns byte-code
+            text=True, # True returns a string, False returns byte-code
             timeout=TIMEOUT,
             )
     except TimeoutExpired:
